@@ -47,7 +47,11 @@ jobs:
   deploy:
     name: deploy-pages
     needs: ci
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # `created` é o push que cria a main: acontece quando o repo nasce do template,
+    # antes do proteger-repo.sh ativar o Pages. O primeiro deploy vem no primeiro merge.
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      !github.event.created
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

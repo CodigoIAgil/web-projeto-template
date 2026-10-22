@@ -16,6 +16,9 @@ bash scripts/proteger-repo.sh CodigoIAgil/NOME-DO-PROJETO
 
 Depois, troque o `name` no `package.json` e o título no `README.md` e no `index.html`.
 
+O site só vai para o GitHub Pages a partir do primeiro merge na `main`. No commit que cria o repositório,
+o deploy é pulado de propósito, porque o Pages ainda não existe nesse momento.
+
 ## Comandos
 
 | Comando             | O que faz                                                      |
