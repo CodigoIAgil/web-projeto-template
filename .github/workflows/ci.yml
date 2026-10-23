@@ -73,6 +73,18 @@ jobs:
             --exclude 'package*.json' --exclude scripts --exclude docs \
             --exclude '*.md' --exclude LICENSE ./ _site/
 
+      # Cache: troca o ?v=dev de todas as páginas pelo commit, para o
+      # navegador buscar o CSS e o JS novos a cada publicação.
+      - name: Versionar CSS e JS pelo commit
+        run: |
+          VERSAO="${GITHUB_SHA::7}"
+          find _site -name '*.html' -exec sed -i "s/?v=dev/?v=${VERSAO}/g" {} +
+          if grep -rl --include='*.html' '?v=dev' _site; then
+            echo "::error::sobrou ?v=dev nas páginas acima"
+            exit 1
+          fi
+          echo "referências versionadas: $(grep -ro --include='*.html' "?v=${VERSAO}" _site | wc -l)"
+
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

@@ -19,6 +19,21 @@ Depois, troque o `name` no `package.json` e o título no `README.md` e no `index
 O site só vai para o GitHub Pages a partir do primeiro merge na `main`. No commit que cria o repositório,
 o deploy é pulado de propósito, porque o Pages ainda não existe nesse momento.
 
+## Cache de CSS e JS
+
+Chame seus arquivos de CSS e JS com `?v=dev` no fim, em todas as páginas:
+
+```html
+<link rel="stylesheet" href="css/style.css?v=dev" />
+<script src="js/app.js?v=dev" defer></script>
+```
+
+No deploy, `dev` vira o commit publicado (ex.: `?v=3c5c766`), e o navegador baixa a versão nova
+a cada publicação, em vez de usar a antiga do cache. Se sobrar algum `?v=dev`, o deploy falha.
+
+Para ícones SVG no HTML, coloque `width` e `height` no próprio `<svg>`: assim eles não ficam
+gigantes mesmo se o CSS falhar.
+
 ## Comandos
 
 | Comando             | O que faz                                                      |
